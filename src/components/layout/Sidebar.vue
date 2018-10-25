@@ -10,8 +10,11 @@
       class="el-menu-vertical-demo"
       mode="vertical"
     >
-      <el-menu-item index="transaction" @click.native="go_to('student')">
+      <el-menu-item index="student" @click.native="go_to('student')">
         <span>Sinh viên</span>
+      </el-menu-item>
+      <el-menu-item index="teacher" @click.native="go_to('teacher')">
+        <span>Giảng viên</span>
       </el-menu-item>
     </el-menu>
   </el-scrollbar>

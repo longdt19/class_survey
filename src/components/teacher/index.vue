@@ -9,7 +9,7 @@
 
           <el-row>
             <el-col :sm="24" :md="12">
-              <el-form-item label="Mã sinh viên" prop="username" style="margin-top: 20px">
+              <el-form-item label="Tên đăng nhập" prop="username" style="margin-top: 20px">
                 <el-input v-model="ruleForm.username" class="input_handle"></el-input>
               </el-form-item>
 
@@ -27,9 +27,6 @@
                 <el-input v-model="ruleForm.fullname" class="input_handle"></el-input>
               </el-form-item>
 
-              <el-form-item label="Khóa học" prop="course" style="margin-top: 20px">
-                <el-input v-model="ruleForm.course" class="input_handle"></el-input>
-              </el-form-item>
             </el-col>
 
           </el-row>
@@ -74,11 +71,6 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="Khóa đào tạo" align="center" header-align="center">
-            <template slot-scope="scope">
-              {{scope.row.course}}
-            </template>
-          </el-table-column>
         </el-table>
 
         <div class="" style="float: right; margin-bottom: 20px">
@@ -98,13 +90,11 @@ export default {
         username: '',
         password: '',
         fullname: '',
-        email: '',
-        course: ''
+        email: ''
       },
       rules: {
         username: [
-          { required: true, message: 'Mã sinh viên không được để trống', trigger: 'blur' },
-          { pattern: /^\d+$/, message: 'Mã sinh viên không hợp lệ', trigger: ['change', 'blur'] }
+          { required: true, message: 'Tên đăng nhập không được để trống', trigger: 'blur' }
         ],
         password: [
           { required: true, message: 'Mật khẩu không được để trống' }
@@ -118,22 +108,19 @@ export default {
           username: 14020259,
           password: 123465,
           fullname: 'Đặng Tùng Long',
-          email: '14020259@vnu.edu.vn',
-          course: 'QHI-2014'
+          email: '14020259@vnu.edu.vn'
         },
         {
           username: 14020259,
           password: 123465,
           fullname: 'Đặng Tùng Long',
-          email: '14020259@vnu.edu.vn',
-          course: 'QHI-2014'
+          email: '14020259@vnu.edu.vn'
         },
         {
           username: 14020259,
           password: 123465,
           fullname: 'Đặng Tùng Long',
-          email: '14020259@vnu.edu.vn',
-          course: 'QHI-2014'
+          email: '14020259@vnu.edu.vn'
         }
       ]
     }

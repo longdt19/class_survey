@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Layout from '@/components/layout'
 import Student from '@/components/student'
+import Teacher from '@/components/teacher'
 
 Vue.use(Router)
 
@@ -18,6 +19,11 @@ export default new Router({
           path: 'student',
           name: 'student',
           component: Student
+        },
+        {
+          path: 'teacher',
+          name: 'teacher',
+          component: Teacher
         }
       ]
     }
