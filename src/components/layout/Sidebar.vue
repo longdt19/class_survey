@@ -10,12 +10,36 @@
       class="el-menu-vertical-demo"
       mode="vertical"
     >
-      <el-menu-item index="student" @click.native="go_to('student')">
-        <span>Sinh viên</span>
-      </el-menu-item>
-      <el-menu-item index="teacher" @click.native="go_to('teacher')">
-        <span>Giảng viên</span>
-      </el-menu-item>
+      <el-submenu index="1" :collapse="true">
+        <template slot="title">
+          <span>Quản lý sinh viên</span>
+        </template>
+
+        <el-menu-item index="student-list" @click.native="go_to('danh-sach-sinh-vien')">
+          <span>Danh sách sinh viên</span>
+        </el-menu-item>
+
+        <el-menu-item index="student-creation" @click.native="go_to('tao-moi-tai-khoan-sinh-vien')">
+          <span>Tạo mới</span>
+        </el-menu-item>
+
+      </el-submenu>
+
+      <el-submenu index="2">
+        <template slot="title">
+          <span>Quản lý giảng viên</span>
+        </template>
+
+        <el-menu-item index="teacher-list" @click.native="go_to('danh-sach-giang-vien')">
+          <span>Danh sách giảng viên</span>
+        </el-menu-item>
+
+        <el-menu-item index="teacher-creation" @click.native="go_to('tao-moi-tai-khoan-giang-vien')">
+          <span>Tạo mới</span>
+        </el-menu-item>
+
+      </el-submenu>
+
     </el-menu>
   </el-scrollbar>
 </template>
@@ -42,6 +66,9 @@ export default {
     go_to (path) {
       this.$router.push('/' + path)
     }
+  },
+  created () {
+    this.defaultActive = this.$route.name
   }
 }
 </script>

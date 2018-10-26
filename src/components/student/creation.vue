@@ -142,6 +142,8 @@ export default {
     'ruleForm.username' (val) {
       this.ruleForm.email = val + '@vnu.edu.vn'
     }
+  },
+  methods: {
   }
 }
 </script>
