@@ -10,11 +10,25 @@
       class="el-menu-vertical-demo"
       mode="vertical"
     >
-      <el-submenu index="1" :collapse="true">
+      <el-submenu index="Survey">
+        <template slot="title">
+          <span>Quản lý khảo sát</span>
+        </template>
+
+        <el-menu-item index="all-surveys" @click.native="go_to('danh-sach-cac-cuoc-khao-sat')">
+          <span>Danh sách khảo sát</span>
+        </el-menu-item>
+
+        <el-menu-item index="surveys-creation" @click.native="go_to('tao-moi-tai-khoan-giang-vien')">
+          <span>Phiếu khảo sát</span>
+        </el-menu-item>
+      </el-submenu>
+
+      <el-submenu index="Student">
+
         <template slot="title">
           <span>Quản lý sinh viên</span>
         </template>
-
         <el-menu-item index="student-list" @click.native="go_to('danh-sach-sinh-vien')">
           <span>Danh sách sinh viên</span>
         </el-menu-item>
@@ -25,7 +39,7 @@
 
       </el-submenu>
 
-      <el-submenu index="2">
+      <el-submenu index="Teacher">
         <template slot="title">
           <span>Quản lý giảng viên</span>
         </template>
@@ -37,7 +51,6 @@
         <el-menu-item index="teacher-creation" @click.native="go_to('tao-moi-tai-khoan-giang-vien')">
           <span>Tạo mới</span>
         </el-menu-item>
-
       </el-submenu>
 
     </el-menu>
@@ -68,6 +81,7 @@ export default {
     }
   },
   created () {
+    console.log('this.$route.name', this.$route.name)
     this.defaultActive = this.$route.name
   }
 }

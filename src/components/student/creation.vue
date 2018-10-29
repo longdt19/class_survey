@@ -43,47 +43,16 @@
     <el-card class="box-card" style="margin-top: 20px">
       <div slot="header" class="clearfix">
         <span>Tải lên tài khoản sinh viên</span>
-        <el-button style="float: right" type="button">Chọn tệp tải lên   <i class="el-icon-upload el-icon-right"></i></el-button>
+        <!-- <el-button style="float: right" type="button">Chọn tệp tải lên   <i class="el-icon-upload el-icon-right"></i></el-button> -->
       </div>
-        <el-table
-          :data="dataTable"
-          style="width: 70%"
-          border
-        >
-          <el-table-column label="Mã sinh viên" align="center" header-align="center">
-            <template slot-scope="scope">
-              {{scope.row.username}}
-            </template>
-          </el-table-column>
+      <upload-excel-component :on-success="handleSuccess" :before-upload="beforeUpload"/>
+      <el-table :data="tableData" border highlight-current-row style="width: 100%;margin-top:20px;">
+        <el-table-column v-for="item of tableHeader" :prop="item" :label="item" :key="item"/>
+      </el-table>
 
-          <el-table-column label="Mật khẩu" align="center" header-align="center">
-            <template slot-scope="scope">
-              {{scope.row.password}}
-            </template>
-          </el-table-column>
-
-          <el-table-column label="Họ và tên" align="center" header-align="center">
-            <template slot-scope="scope">
-              {{scope.row.fullname}}
-            </template>
-          </el-table-column>
-
-          <el-table-column label="VNU email" align="center" header-align="center">
-            <template slot-scope="scope">
-              {{scope.row.email}}
-            </template>
-          </el-table-column>
-
-          <el-table-column label="Khóa đào tạo" align="center" header-align="center">
-            <template slot-scope="scope">
-              {{scope.row.course}}
-            </template>
-          </el-table-column>
-        </el-table>
-
-        <div class="" style="float: right; margin-bottom: 20px">
-          <el-button type="primary">Thêm mới  <i class="el-icon-upload el-icon-right"></i></el-button>
-        </div>
+      <div class="" style="float: right; margin-bottom: 20px; margin-top: 20px">
+        <el-button type="primary">Tải lên  <i class="el-icon-upload el-icon-right"></i></el-button>
+      </div>
     </el-card>
 
   </section>
@@ -91,9 +60,14 @@
 </template>
 
 <script>
+import UploadExcelComponent from '@/components/helpers/UploadExcel'
+
 export default {
+  components: { UploadExcelComponent },
   data () {
     return {
+      tableData: [],
+      tableHeader: [],
       ruleForm: {
         username: '',
         password: '',
@@ -101,6 +75,7 @@ export default {
         email: '',
         course: ''
       },
+      file_upload: '',
       rules: {
         username: [
           { required: true, message: 'Mã sinh viên không được để trống', trigger: 'blur' },
@@ -141,9 +116,32 @@ export default {
   watch: {
     'ruleForm.username' (val) {
       this.ruleForm.email = val + '@vnu.edu.vn'
+      if (val === '') {
+        this.ruleForm.email = ''
+      }
     }
   },
   methods: {
+    upload_file () {
+      // const file = document.getElementById('file_upload').files
+    },
+    beforeUpload (file) {
+      const isLt1M = file.size / 1024 / 1024 < 1
+
+      if (isLt1M) {
+        return true
+      }
+
+      this.$message({
+        message: 'Vui lòng upload tệp có dung lượng nhỏ hơn 1mb',
+        type: 'warning'
+      })
+      return false
+    },
+    handleSuccess ({ results, header }) {
+      this.tableData = results
+      this.tableHeader = header
+    }
   }
 }
 </script>

@@ -9,6 +9,8 @@ import StudentList from '@/components/student/list'
 import TeacherCreation from '@/components/teacher/creation'
 import TeacherList from '@/components/teacher/list'
 
+import AllSurveys from '@/components/surveys/all_surveys'
+
 Vue.use(Router)
 
 export default new Router({
@@ -38,6 +40,11 @@ export default new Router({
           path: 'danh-sach-giang-vien',
           name: 'teacher-list',
           component: TeacherList
+        },
+        {
+          path: 'danh-sach-cac-cuoc-khao-sat',
+          name: 'all-surveys',
+          component: AllSurveys
         }
       ]
     }

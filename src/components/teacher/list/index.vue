@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import EditComponent from './edit'
-import DeleteComponent from './delete'
+import EditComponent from './edition'
+import DeleteComponent from './deletion'
 
 export default {
   components: { EditComponent, DeleteComponent },
