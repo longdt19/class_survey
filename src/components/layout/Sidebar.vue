@@ -15,11 +15,11 @@
           <span>Quản lý khảo sát</span>
         </template>
 
-        <el-menu-item index="all-surveys" @click.native="go_to('danh-sach-cac-cuoc-khao-sat')">
+        <el-menu-item index="all-surveys" @click.native="go_to('quan-tri/danh-sach-cac-cuoc-khao-sat')">
           <span>Danh sách khảo sát</span>
         </el-menu-item>
 
-        <el-menu-item index="surveys-creation" @click.native="go_to('tao-moi-tai-khoan-giang-vien')">
+        <el-menu-item index="surveys-creation" @click.native="go_to('quan-tri/tao-moi-tai-khoan-giang-vien')">
           <span>Phiếu khảo sát</span>
         </el-menu-item>
       </el-submenu>
@@ -29,11 +29,11 @@
         <template slot="title">
           <span>Quản lý sinh viên</span>
         </template>
-        <el-menu-item index="student-list" @click.native="go_to('danh-sach-sinh-vien')">
+        <el-menu-item index="student-list" @click.native="go_to('quan-tri/danh-sach-sinh-vien')">
           <span>Danh sách sinh viên</span>
         </el-menu-item>
 
-        <el-menu-item index="student-creation" @click.native="go_to('tao-moi-tai-khoan-sinh-vien')">
+        <el-menu-item index="student-creation" @click.native="go_to('quan-tri/tao-moi-tai-khoan-sinh-vien')">
           <span>Tạo mới</span>
         </el-menu-item>
 
@@ -44,11 +44,11 @@
           <span>Quản lý giảng viên</span>
         </template>
 
-        <el-menu-item index="teacher-list" @click.native="go_to('danh-sach-giang-vien')">
+        <el-menu-item index="teacher-list" @click.native="go_to('quan-tri/danh-sach-giang-vien')">
           <span>Danh sách giảng viên</span>
         </el-menu-item>
 
-        <el-menu-item index="teacher-creation" @click.native="go_to('tao-moi-tai-khoan-giang-vien')">
+        <el-menu-item index="teacher-creation" @click.native="go_to('quan-tri/tao-moi-tai-khoan-giang-vien')">
           <span>Tạo mới</span>
         </el-menu-item>
       </el-submenu>

@@ -11,14 +11,25 @@ import TeacherList from '@/components/teacher/list'
 
 import AllSurveys from '@/components/surveys/all_surveys'
 
+import Login from '@/components/login'
+
+import CourseLayout from '@/components/courses'
+import Course from '@/components/courses/course'
+import AllCourses from '@/components/courses/all'
+
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
-      name: 'layout',
+      path: '/dang-nhap',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/quan-tri',
+      name: 'admin-layout',
       component: Layout,
       children: [
         {
@@ -45,6 +56,24 @@ export default new Router({
           path: 'danh-sach-cac-cuoc-khao-sat',
           name: 'all-surveys',
           component: AllSurveys
+        }
+      ]
+    },
+    {
+      path: '/',
+      name: 'layout',
+      component: CourseLayout,
+      redirect: '/danh-sach-lop-mon-hoc',
+      children: [
+        {
+          path: 'danh-sach-lop-mon-hoc',
+          name: 'all-courses',
+          component: AllCourses
+        },
+        {
+          path: 'mon-hoc',
+          name: 'course',
+          component: Course
         }
       ]
     }
