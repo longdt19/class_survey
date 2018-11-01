@@ -31,6 +31,7 @@ export default new Router({
       path: '/quan-tri',
       name: 'admin-layout',
       component: Layout,
+      redirect: '/quan-tri/danh-sach-cac-cuoc-khao-sat',
       children: [
         {
           path: 'tao-moi-tai-khoan-sinh-vien',

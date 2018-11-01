@@ -1,6 +1,5 @@
 <template>
-<div class="course">
-  <div class="course_top"></div>
+<div class="course" style="">
   <div class="container">
     <div class="row row-lg-eq-height">
       <!-- Panels -->
@@ -25,26 +24,92 @@
               <span>Mã lớp môn học: INT111 11</span> <br />
               <span>Phòng học: 301 G2</span> <br />
               <span>Tiết: 2-5</span> <br />
-
             </div>
+
             <!-- Instructors -->
             <div class="instructors">
               <div class="panel_title">Phiếu đánh giá</div>
-              <div class="row instructors_row">
 
+              <div class=" instructors_row" style="margin-left: 20px">
+                <span>1. Cơ sở vật chất</span>
+                <br />
+                <div class="panel_text" style="padding-left: 20px;">
+                  <el-row>
+                    <el-col :sm="24" :md="15">
+                      <span>Giảng đường đáp ứng nhu cầu môn học</span>
+                    </el-col>
+
+                    <el-col :sm="24" :md="9" style="margin-top: 5px">
+                      <el-radio-group v-model="radio1" style="padding-top: 3px">
+                        <el-radio v-for="i in 5" :key='i' :label="i"></el-radio>
+                      </el-radio-group>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :sm="24" :md="15">
+                      <span>Các trang thiết bị giảng đường đáp ứng nhu cầu giảng dạy và học tập</span>
+                    </el-col>
+
+                    <el-col :sm="24" :md="9" style="margin-top: 5px">
+                      <el-radio-group v-model="radio2">
+                        <el-radio v-for="i in 5" :key='i' :label="i"></el-radio>
+                      </el-radio-group>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :sm="24" :md="15">
+                      <span>Các trang thiết bị giảng đường đáp ứng nhu cầu giảng dạy và học tập</span>
+                    </el-col>
+
+                    <el-col :sm="24" :md="9" style="margin-top: 5px">
+                      <el-radio-group v-model="radio2">
+                        <el-radio v-for="i in 5" :key='i' :label="i"></el-radio>
+                      </el-radio-group>
+                    </el-col>
+                  </el-row>
+                </div>
+              </div>
+
+              <div class=" instructors_row" style="margin-left: 20px">
+                <span>2. Môn học</span>
+                <br />
+                <div class="panel_text" style="padding-left: 20px;">
+                  <el-row>
+                    <el-col :sm="24" :md="15">
+                      <span>Bạn được hỗ trợ kịp thời trong quá trình học môn này</span>
+                    </el-col>
+
+                    <el-col :sm="24" :md="9" style="margin-top: 5px">
+                      <el-radio-group v-model="radio1" style="padding-top: 3px">
+                        <el-radio v-for="i in 5" :key='i' :label="i"></el-radio>
+                      </el-radio-group>
+                    </el-col>
+                  </el-row>
+
+                  <el-row>
+                    <el-col :sm="24" :md="15">
+                      <span>Mục tiêu của môn học nêu rõ kiến thức và kỹ năng người học cần đạt được</span>
+                    </el-col>
+
+                    <el-col :sm="24" :md="9" style="margin-top: 5px">
+                      <el-radio-group v-model="radio2">
+                        <el-radio v-for="i in 5" :key='i' :label="i"></el-radio>
+                      </el-radio-group>
+                    </el-col>
+                  </el-row>
+                </div>
               </div>
             </div>
+
             <!-- FAQs -->
             <div class="faqs">
               <div class="panel_title">Ý kiến phản hồi</div>
               <div class="accordions">
 
                 <div class="elements_accordions">
-                  <el-input
-                    type="textarea"
-                    :rows="2"
-                    placeholder="Ý kiến phản hồi"
-                    v-model="textarea">
+                  <el-input type="textarea" :rows="2" placeholder="Ý kiến phản hồi" v-model="textarea">
                   </el-input>
 
                 </div>
@@ -66,8 +131,8 @@
       <!-- Sidebar -->
       <div class="col-lg-3">
         <div class="sidebar">
-          <div class="sidebar_background"></div>
-          <div class="sidebar_content">
+          <div class="sidebar_background" style="margin-top: 81.5px"></div>
+          <div class="sidebar_content" style="padding-top: 20px">
             <!-- You may like -->
             <div class="sidebar_section like" style="width: 290px; margin-top: 80px">
               <div class="" style="margin-top: 50px">
@@ -105,8 +170,14 @@
 export default {
   data () {
     return {
-      textarea: ''
+      textarea: '',
+      radio1: '',
+      radio2: '',
+      radio3: '',
+      radio4: ''
     }
+  },
+  watch: {
   }
 }
 </script>
@@ -122,6 +193,7 @@ export default {
   height: 50px;
   border-radius: 5px;
 }
+
 .el-textarea__inner {
   height: 200px
 }
