@@ -45,8 +45,9 @@
       </div>
 
     </header>
-
-    <router-view />
+    <transition>
+      <router-view />
+    </transition>
 
     <footer class="footer footer-handle">
       <div class="copyright">
