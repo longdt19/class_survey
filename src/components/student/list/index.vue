@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import { STUDENT_GET_ALL_URL } from '@/constants/endpoints'
+
 import EditComponent from './edition'
 import DeleteComponent from './deletion'
 
@@ -56,6 +58,7 @@ export default {
   components: { EditComponent, DeleteComponent },
   data () {
     return {
+      loading: false,
       dataTable: [
         {
           username: 14020259,
@@ -82,6 +85,13 @@ export default {
     }
   },
   methods: {
+    async get_student_list () {
+      if (this.loading) return
+      this.loading = true
+      const response = await this.$services.do_request('get', STUDENT_GET_ALL_URL)
+      this.loading = false
+      console.log('reponse', response)
+    },
     delete_student () {
       this.$refs.delete_student.open()
     },
@@ -92,6 +102,9 @@ export default {
     edited_student (student) {
       console.log(student)
     }
+  },
+  created () {
+    this.get_student_list()
   }
 }
 </script>
