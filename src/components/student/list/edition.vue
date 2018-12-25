@@ -9,9 +9,9 @@
           <el-input v-model="ruleForm.username" class="input_handle"></el-input>
         </el-form-item>
 
-        <el-form-item label="Mật khẩu" prop="password" style="margin-top: 20px">
+        <!-- <el-form-item label="Mật khẩu" prop="password" style="margin-top: 20px">
           <el-input v-model="ruleForm.password" type="password" class="input_handle"></el-input>
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item label="VNU email" prop="email" style="margin-top: 20px">
           <el-input v-model="ruleForm.email" class="input_handle"></el-input>
@@ -28,12 +28,15 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">Hủy bỏ</el-button>
-      <el-button type="primary" @click="dialogFormVisible = false">Xác nhận</el-button>
+      <el-button type="primary" @click="edit()" :loading="loading">Xác nhận</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
+import { STUDENT } from '@/constants/endpoints'
+import { STATUS } from '@/constants/status_return_code'
+
 export default {
   data () {
     return {
@@ -58,21 +61,52 @@ export default {
         email: [
           { type: 'email', message: 'VNU email không hợp lệ', trigger: ['change', 'blur'] }
         ]
-      }
+      },
+      loading: false
     }
   },
   watch: {
     'ruleForm.username' (val) {
-      this.ruleForm.email = val + '@vnu.edu.vn'
+      if (val === '') {
+        this.ruleForm.email = val
+      } else {
+        this.ruleForm.email = val + '@vnu.edu.vn'
+      }
     }
   },
   methods: {
-    edit () {
-      this.$emit('edited_student', this.ruleForm)
+    async edit () {
+      if (this.loading) return
+      this.loading = true
+
+      const data = {
+        'studentCode': this.ruleForm.username,
+        'fullName': this.ruleForm.fullname,
+        'course': this.ruleForm.course,
+        'email': this.ruleForm.email,
+        'id': this.student.id
+      }
+
+      const response = await this.$services.do_request('put', STUDENT, data)
+      this.loading = false
+
+      if (response.data.message === 'Success') {
+        this.$message.success('Sửa sinh viên thành công')
+        this.ruleForm = {
+          username: '',
+          password: '',
+          fullname: '',
+          email: '',
+          course: ''
+        }
+        this.$emit('edited_student')
+        this.dialogFormVisible = false
+      } else if (response.status === 400) {
+        this.$message.error(STATUS[response.data.code])
+      }
     },
     open (student) {
-      this.ruleForm.username = student.username
-      this.ruleForm.password = student.password
+      this.ruleForm.username = student.studentCode
       this.ruleForm.fullname = student.fullname
       this.ruleForm.email = student.email
       this.ruleForm.course = student.course

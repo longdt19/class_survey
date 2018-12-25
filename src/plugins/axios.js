@@ -94,10 +94,9 @@ class Services {
     if (!process.browser) return {}
     if (!this.context) return {}
 
-    // return {
-    //   Authorization: this.context.$store.getters['Common/token']
-    // }
-    return ''
+    return {
+      Authorization: this.context.$store.getters['Common/token']
+    }
   }
 }
 // window.call_server_with_axios = Axios

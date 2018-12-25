@@ -9,9 +9,9 @@
           <el-input v-model="ruleForm.username" class="input_handle"></el-input>
         </el-form-item>
 
-        <el-form-item label="Mật khẩu" prop="password" style="margin-top: 20px">
+        <!-- <el-form-item label="Mật khẩu" prop="password" style="margin-top: 20px">
           <el-input v-model="ruleForm.password" type="password" class="input_handle"></el-input>
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item label="VNU email" prop="email" style="margin-top: 20px">
           <el-input v-model="ruleForm.email" class="input_handle"></el-input>
@@ -24,12 +24,15 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">Hủy bỏ</el-button>
-      <el-button type="primary" @click="dialogFormVisible = false">Xác nhận</el-button>
+      <el-button type="primary" @click="edit()" :loading="loading">Xác nhận</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
+import { TEACHER } from '@/constants/endpoints'
+import { STATUS } from '@/constants/status_return_code'
+
 export default {
   data () {
     return {
@@ -53,16 +56,43 @@ export default {
         email: [
           { type: 'email', message: 'VNU email không hợp lệ', trigger: ['change', 'blur'] }
         ]
-      }
+      },
+      loading: false
     }
   },
   methods: {
-    edit () {
-      this.$emit('edited_teacher', this.ruleForm)
+    async edit () {
+      if (this.loading) return
+      this.loading = true
+
+      const data = {
+        'username': this.ruleForm.username,
+        'lecturerCode': this.teacher.lecturerCode,
+        'fullName': this.ruleForm.fullname,
+        'email': this.ruleForm.email,
+        'id': this.teacher.id
+      }
+
+      const response = await this.$services.do_request('put', TEACHER, data)
+      this.loading = false
+
+      if (response.data.message === 'Success') {
+        this.$message.success('Sửa giảng viên thành công')
+        this.ruleForm = {
+          username: '',
+          password: '',
+          fullname: '',
+          email: '',
+          course: ''
+        }
+        this.$emit('edited_teacher')
+        this.dialogFormVisible = false
+      } else if (response.status === 400) {
+        this.$message.error(STATUS[response.data.code])
+      }
     },
     open (teacher) {
-      this.ruleForm.username = teacher.username
-      this.ruleForm.password = teacher.password
+      this.ruleForm.username = teacher.user.username
       this.ruleForm.fullname = teacher.fullname
       this.ruleForm.email = teacher.email
       this.teacher = teacher

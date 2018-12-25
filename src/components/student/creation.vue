@@ -35,7 +35,7 @@
           </el-row>
         </el-form>
         <div class="" style="text-align: right">
-          <el-button type="primary">Thêm mới</el-button>
+          <el-button type="primary" @click="create_student()" :loading="loading">Thêm mới</el-button>
         </div>
       </div>
     </el-card>
@@ -51,7 +51,7 @@
       </el-table>
 
       <div class="" style="float: right; margin-bottom: 20px; margin-top: 20px">
-        <el-button type="primary">Tải lên  <i class="el-icon-upload el-icon-right"></i></el-button>
+        <el-button type="primary" @click="upload_file()" :loading="loading">Tải lên  <i class="el-icon-upload el-icon-right"></i></el-button>
       </div>
     </el-card>
 
@@ -60,6 +60,8 @@
 </template>
 
 <script>
+import { STUDENT, STUDENT_UPLOAD } from '@/constants/endpoints'
+import { STATUS } from '@/constants/status_return_code'
 import UploadExcelComponent from '@/components/helpers/UploadExcel'
 
 export default {
@@ -75,7 +77,7 @@ export default {
         email: '',
         course: ''
       },
-      file_upload: '',
+      file_upload: null,
       rules: {
         username: [
           { required: true, message: 'Mã sinh viên không được để trống', trigger: 'blur' },
@@ -88,29 +90,8 @@ export default {
           { type: 'email', message: 'VNU email không hợp lệ', trigger: ['change', 'blur'] }
         ]
       },
-      dataTable: [
-        {
-          username: 14020259,
-          password: 123465,
-          fullname: 'Đặng Tùng Long',
-          email: '14020259@vnu.edu.vn',
-          course: 'QHI-2014'
-        },
-        {
-          username: 14020259,
-          password: 123465,
-          fullname: 'Đặng Tùng Long',
-          email: '14020259@vnu.edu.vn',
-          course: 'QHI-2014'
-        },
-        {
-          username: 14020259,
-          password: 123465,
-          fullname: 'Đặng Tùng Long',
-          email: '14020259@vnu.edu.vn',
-          course: 'QHI-2014'
-        }
-      ]
+      dataTable: [],
+      loading: false
     }
   },
   watch: {
@@ -122,13 +103,54 @@ export default {
     }
   },
   methods: {
-    upload_file () {
-      // const file = document.getElementById('file_upload').files
+    async create_student () {
+      if (this.loading) return
+      this.loading = true
+
+      const data = {
+        'studentCode': this.ruleForm.username,
+        'password': this.ruleForm.password,
+        'fullName': this.ruleForm.fullname,
+        'course': this.ruleForm.course,
+        'email': this.ruleForm.email
+      }
+      const response = await this.$services.do_request('post', STUDENT, data)
+      this.loading = false
+
+      if (response.data.message === 'Success') {
+        this.$message.success('Thêm mới sinh viên thành công')
+        this.ruleForm = {
+          username: '',
+          password: '',
+          fullname: '',
+          email: '',
+          course: ''
+        }
+      } else if (response.status === 400) {
+        this.$message.error(STATUS[response.data.code])
+      }
+    },
+    async upload_file () {
+      if (this.loading) return
+      this.loading = true
+
+      const formData = new FormData()
+      formData.append('file', this.file_upload)
+      const response = await this.$services.do_request('post', STUDENT_UPLOAD, formData)
+      this.loading = false
+      console.log('response', response)
+
+      if (response.data.message === 'Success') {
+        this.$message.success('Thêm mới sinh viên thành công')
+      } else if (response.status === 400) {
+        this.$message.error(STATUS[response.data.code])
+      }
     },
     beforeUpload (file) {
       const isLt1M = file.size / 1024 / 1024 < 1
 
       if (isLt1M) {
+        this.file_upload = file
         return true
       }
 

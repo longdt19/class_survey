@@ -17,6 +17,8 @@ import CourseLayout from '@/components/courses'
 import Course from '@/components/courses/course'
 import AllCourses from '@/components/courses/all'
 
+import ManageSurvey from '@/components/surveys/manage'
+
 Vue.use(Router)
 
 export default new Router({
@@ -57,6 +59,11 @@ export default new Router({
           path: 'danh-sach-cac-cuoc-khao-sat',
           name: 'all-surveys',
           component: AllSurveys
+        },
+        {
+          path: 'quan-ly-phieu-khao-sat',
+          name: 'manage-surveys',
+          component: ManageSurvey
         }
       ]
     },

@@ -1,5 +1,6 @@
-module.exports = {
-  NODE_ENV: '"production"',
-  ENV_CONFIG: '"prod"',
-  BASE_API: '"https://api-prod"'
-}
+const config = require('../src/config')
+const merge = require('webpack-merge')
+
+module.exports = merge(config, {
+  NODE_ENV: '"production"'
+})

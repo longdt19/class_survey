@@ -11,21 +11,43 @@
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="centerDialogVisible = false">Hủy bỏ</el-button>
-      <el-button type="primary" @click="centerDialogVisible = false">Xác nhận</el-button>
+      <el-button type="primary" @click="delete_teacher()" :loading="loading">Xác nhận</el-button>
     </span>
 </el-dialog>
 </template>
 
 <script>
+import { TEACHER } from '@/constants/endpoints'
+import { STATUS } from '@/constants/status_return_code'
+
 export default {
   data () {
     return {
-      centerDialogVisible: false
+      centerDialogVisible: false,
+      teacher_id: null,
+      loading: false
     }
   },
   methods: {
-    open () {
+    open (teacher) {
+      this.teacher_id = teacher.id
       this.centerDialogVisible = true
+    },
+    async delete_teacher () {
+      if (this.loading) return
+      this.loading = true
+
+      const url = TEACHER + `/${this.teacher_id}`
+      const response = await this.$services.do_request('delete', url)
+      this.loading = false
+
+      if (response.data.message === 'Success') {
+        this.$message.success('Xóa giảng viên thành công')
+        this.$emit('deleted_teacher')
+        this.centerDialogVisible = false
+      } else if (response.status === 400) {
+        this.$message.error(STATUS[response.data.code])
+      }
     }
   }
 }

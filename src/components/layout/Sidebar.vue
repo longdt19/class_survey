@@ -19,7 +19,7 @@
           <span>Danh sách khảo sát</span>
         </el-menu-item>
 
-        <el-menu-item index="surveys-creation" @click.native="go_to('quan-tri/tao-moi-tai-khoan-giang-vien')">
+        <el-menu-item index="surveys-creation" @click.native="go_to('quan-tri/quan-ly-phieu-khao-sat')">
           <span>Phiếu khảo sát</span>
         </el-menu-item>
       </el-submenu>

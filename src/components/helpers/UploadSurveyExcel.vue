@@ -88,13 +88,9 @@ export default {
         const reader = new FileReader()
         reader.onload = e => {
           const data = e.target.result
-          console.log('data', data)
           const fixedData = this.fixData(data)
-          console.log('fixedData', fixedData)
           const workbook = XLSX.read(btoa(fixedData), { type: 'base64' })
-          console.log('workbook', workbook)
           const firstSheetName = workbook.SheetNames[0]
-          console.log('firstSheetName', firstSheetName)
           const worksheet = workbook.Sheets[firstSheetName]
           // let i = 1
           // for (i=1; i < 11; i++) {
@@ -105,11 +101,8 @@ export default {
           //   delete worksheet[`E${i}`]
           //   delete worksheet[`F${i}`]
           // }
-          console.log('worksheet', worksheet)
           const header = this.getHeaderRow(worksheet)
-          console.log('header', header)
           const results = XLSX.utils.sheet_to_json(worksheet)
-          console.log('result', results)
           this.generateData({ header, results })
           this.loading = false
           resolve()
@@ -126,10 +119,8 @@ export default {
       return o
     },
     getHeaderRow (sheet) {
-      console.log('====sheet', sheet)
       const headers = []
       const range = XLSX.utils.decode_range(sheet['!ref'])
-      console.log('range', range)
       let C
       const R = range.s.r
       /* start in the first row */

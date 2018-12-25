@@ -7,15 +7,15 @@
     >
       <el-table-column label="Mã sinh viên" align="center" header-align="center">
         <template slot-scope="scope">
-          {{scope.row.username}}
+          {{scope.row.studentCode}}
         </template>
       </el-table-column>
 
-      <el-table-column label="Mật khẩu" align="center" header-align="center">
+      <!-- <el-table-column label="Mật khẩu" align="center" header-align="center">
         <template slot-scope="scope">
           {{scope.row.password}}
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column label="Họ và tên" align="center" header-align="center">
         <template slot-scope="scope">
@@ -44,7 +44,7 @@
     </el-table>
 
     <edit-component ref='edit_student' @edited_student="edited_student" />
-    <delete-component ref='delete_student' />
+    <delete-component ref='delete_student' @deleted_student="deleted_student"/>
   </section>
 </template>
 
@@ -59,29 +59,7 @@ export default {
   data () {
     return {
       loading: false,
-      dataTable: [
-        {
-          username: 14020259,
-          password: 123465,
-          fullname: 'Đặng Tùng Long',
-          email: '14020259@vnu.edu.vn',
-          course: 'QHI-2014'
-        },
-        {
-          username: 14020259,
-          password: 123465,
-          fullname: 'Đặng Tùng Long',
-          email: '14020259@vnu.edu.vn',
-          course: 'QHI-2014'
-        },
-        {
-          username: 14020259,
-          password: 123465,
-          fullname: 'Đặng Tùng Long',
-          email: '14020259@vnu.edu.vn',
-          course: 'QHI-2014'
-        }
-      ]
+      dataTable: []
     }
   },
   methods: {
@@ -90,17 +68,24 @@ export default {
       this.loading = true
       const response = await this.$services.do_request('get', STUDENT_GET_ALL_URL)
       this.loading = false
-      console.log('reponse', response)
+
+      if (response.status === 200) {
+        this.dataTable = response.data.data
+      } else {
+        console.log('bad request')
+      }
     },
-    delete_student () {
-      this.$refs.delete_student.open()
+    delete_student (student) {
+      this.$refs.delete_student.open(student)
     },
     edit_student (student) {
-      console.log('student', student)
       this.$refs.edit_student.open(student)
     },
-    edited_student (student) {
-      console.log(student)
+    edited_student () {
+      this.get_student_list()
+    },
+    deleted_student () {
+      this.get_student_list()
     }
   },
   created () {

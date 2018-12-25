@@ -10,7 +10,7 @@
       <form class="login100-form validate-form">
         <div class="wrap-input100 validate-input m-b-26">
           <span class="label-input100">Tài khoản</span>
-          <input class="input100" type="text" name="username" placeholder="Nhập vào tên đăng nhập">
+          <input class="input100" type="text" name="username" placeholder="Nhập vào tên đăng nhập" v-model='username'>
           <span class="focus-input100"></span>
         </div>
 
@@ -18,7 +18,7 @@
           <div class="" style="display: block">
             <span class="label-input100">Mật khẩu</span>
           </div>
-          <input class="input100" type="password" name="pass" placeholder="Nhập vào mật khẩu">
+          <input class="input100" type="password" name="pass" placeholder="Nhập vào mật khẩu" v-model='password'>
           <span class="focus-input100"></span>
         </div>
 
@@ -37,19 +37,57 @@
           </div>
         </div> -->
 
-        <div class="container-login100-form-btn" style="margin-top: 60px">
-          <button class="login100-form-btn">
-            Đăng nhập
-          </button>
-        </div>
       </form>
+      <div class="container-login100-form-btn" style="margin-top: -5%; margin-left: 30%; margin-bottom: 10%">
+        <el-button class="login100-form-btn" @click="login()" :loading="loading">
+          Đăng nhập
+        </el-button>
+      </div>
     </div>
   </div>
 </div>
 </template>
 
 <script>
-export default {}
+import {
+  LOGIN
+} from '@/constants/endpoints'
+
+export default {
+  data () {
+    return {
+      username: '',
+      password: '',
+      loading: false
+    }
+  },
+  methods: {
+    async login () {
+      if (this.loading) return
+      this.loading = true
+
+      const data = {
+        'username': this.username,
+        'password': this.password
+      }
+
+      const response = await this.$services.do_request('post', LOGIN, data)
+      this.loading = false
+
+      if (response.data.message === 'Success') {
+        const token = response.data.data.tokenState.jwt
+        this.$store.commit('Common/tokenLoaded', token)
+        const username = response.data.data.username
+        this.$store.commit('Common/username', username)
+        this.$router.push('/')
+      } else if (response.data.code === 401) {
+        this.$message.error('Tài khoản không đúng')
+      } else {
+        this.$message.error('Lỗi hệ thống! Đăng nhập thất bại')
+      }
+    }
+  }
+}
 </script>
 
 <style scoped="">
