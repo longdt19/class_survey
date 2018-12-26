@@ -1,8 +1,5 @@
 <template>
 <section>
-  <!-- <div class="" style="float: right; margin-bottom: 20px">
-    <el-button>Thêm khảo sát môn học</el-button>
-  </div> -->
   <el-card class="box-card" style="margin-top: 20px">
     <div slot="header" class="clearfix">
       <span>Tải lên lớp môn học</span>
@@ -21,6 +18,11 @@
       <el-button type="primary" @click="upload_file()" :loading="loading">Tải lên  <i class="el-icon-upload el-icon-right"></i></el-button>
     </div>
   </el-card>
+
+  <div class="" style="text-align: left; margin-top: 20px">
+    <el-button @click="open_generate_all()">Tạo cuộc khảo sát cho tất cả</el-button>
+  </div>
+
   <el-table
       :data="tableData"
       style="width: 100%; margin-top: 20px"
@@ -37,7 +39,7 @@
 
     <el-table-column label="Mã lớp môn học" align="center" header-align="center">
       <template slot-scope="scope">
-        {{scope.row.subject.code}}
+        {{scope.row.name}}
       </template>
     </el-table-column>
 
@@ -53,10 +55,20 @@
       </template>
     </el-table-column>
 
+    <el-table-column label="Đã tạo khảo sát" align="center" header-align="center">
+      <template slot-scope="scope">
+        <i
+          :class=" scope.row.isStartSurvey === 1 ? 'el-icon-success' : 'el-icon-error' "
+          :style=" scope.row.isStartSurvey === 1 ? 'color: green' : 'color: red'"
+        ></i>
+      </template>
+    </el-table-column>
+
     <el-table-column label="Thao tác" align="center" header-align="center">
       <template slot-scope="scope">
         <!-- <el-button circle icon="el-icon-edit" type="warning" @click="edit_class(scope.row)"></el-button> -->
-        <el-button circle icon="el-icon-search"></el-button>
+        <el-button circle icon="el-icon-search" @click="edit_class(scope.row)"></el-button>
+        <el-button circle icon="el-icon-view" @click="open_generate_survey(scope.row)"></el-button>
         <el-button circle icon="el-icon-delete" type="danger" @click="delete_class(scope.row)"></el-button>
       </template>
     </el-table-column>
@@ -64,6 +76,8 @@
 
   <edit-component ref='edit_class' @edited_class="edited_class" />
   <delete-component ref='delete_class' @deleted_class="deleted_class"/>
+  <gen-survey ref='generate_survey' @generated_survey='generated_survey' />
+  <gen-all-survey ref='generate_all' @generated_survey='generated_survey' />
 </section>
 </template>
 
@@ -75,9 +89,11 @@ import UploadExcelComponent from '@/components/helpers/UploadSurveyExcel'
 
 import EditComponent from './edition'
 import DeleteComponent from './deletion'
+import GenSurvey from './generate_survey'
+import GenAllSurvey from './generate_all'
 
 export default {
-  components: { UploadExcelComponent, EditComponent, DeleteComponent },
+  components: { UploadExcelComponent, EditComponent, DeleteComponent, GenSurvey, GenAllSurvey },
   data () {
     return {
       tableStudentData: [],
@@ -99,7 +115,7 @@ export default {
       }
       const response = await this.$services.do_request('get', CLASS, data)
       this.loading = false
-      console.log('response', response)
+
       if (response.status === 200) {
         this.tableData = response.data.data.content
       } else {
@@ -117,6 +133,7 @@ export default {
 
       if (response.data.message === 'Success') {
         this.$message.success('Thêm mới lớp môn học thành công')
+        this.file_upload = ''
         this.get_list()
       } else if (response.status === 400) {
         // this.$message.error(STATUS[response.data.code])
@@ -133,6 +150,15 @@ export default {
     },
     deleted_class () {
       this.get_list()
+    },
+    generated_survey () {
+      this.get_list()
+    },
+    open_generate_survey (survey) {
+      this.$refs.generate_survey.open(survey)
+    },
+    open_generate_all () {
+      this.$refs.generate_all.open()
     },
     beforeUpload (file) {
       const isLt1M = file.size / 1024 / 1024 < 1

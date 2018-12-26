@@ -79,7 +79,13 @@ export default {
         this.$store.commit('Common/tokenLoaded', token)
         const username = response.data.data.username
         this.$store.commit('Common/username', username)
-        this.$router.push('/')
+        const role = response.data.data.role
+        this.$store.commit('Common/role_loaded', role)
+        if (username === 'admin') {
+          this.$router.push('/quan-tri')
+        } else {
+          this.$router.push('/')
+        }
       } else if (response.data.code === 401) {
         this.$message.error('Tài khoản không đúng')
       } else {

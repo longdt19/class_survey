@@ -95,7 +95,7 @@ export default new Router({
           ]
         },
         {
-          path: 'mon-hoc',
+          path: 'mon-hoc/:id',
           name: 'course',
           component: Course
         }

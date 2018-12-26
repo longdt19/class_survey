@@ -123,7 +123,7 @@ export default {
     },
     logout () {
       this.$store.commit('Common/restore')
-      this.$router.push('/login')
+      this.$router.push('/dang-nhap')
     },
     check_change_pass (pass1, pass2) {
       if (pass1.length === 0 || pass2.length === 0) return null

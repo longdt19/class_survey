@@ -1,26 +1,41 @@
 <template>
-  <el-dialog title="Chỉnh sửa thông tin lớp môn học" :visible.sync="dialogFormVisible">
-    <div class="">
+  <el-dialog title="Xem thông tin lớp môn học" :visible.sync="dialogFormVisible">
 
-    </div>
-    <el-form :model="ruleForm" :rules="rules" label-width="150px" ref="ruleForm">
+      <el-table
+          :data="tableData"
+          style="width: 100%; margin-top: 20px; margin-bottom: 30px"
+          border
+      >
+        <el-table-column  type="index"  label="STT" width="50" align="center" header-align="center">
+        </el-table-column>
 
-        <el-form-item label="Tên môn học" prop="subject_name" style="margin-top: 20px">
-          <el-input v-model="ruleForm.subject_name" class="input_handle"></el-input>
-        </el-form-item>
+        <el-table-column label="Họ và tên" align="center" header-align="center">
+          <template slot-scope="scope">
+            {{ scope.row.student.fullname}}
+          </template>
+        </el-table-column>
 
-        <el-form-item label="Mã lớp môn học" prop="subject_code" style="margin-top: 20px">
-          <el-input v-model="ruleForm.subject_code" class="input_handle"></el-input>
-        </el-form-item>
+        <el-table-column label="Mã sinh viên" align="center" header-align="center">
+          <template slot-scope="scope">
+            {{ scope.row.student.studentCode}}
+          </template>
+        </el-table-column>
 
-        <el-form-item label="Tên giảng viên" prop="teacher" style="margin-top: 20px">
-          <el-input v-model="ruleForm.teacher" class="input_handle"></el-input>
-        </el-form-item>
+        <el-table-column label="Email" align="center" header-align="center">
+          <template slot-scope="scope">
+            {{ scope.row.student.email}}
+          </template>
+        </el-table-column>
 
-    </el-form>
+        <el-table-column label="Khóa học" align="center" header-align="center">
+          <template slot-scope="scope">
+            {{ scope.row.student.course}}
+          </template>
+        </el-table-column>
+
+      </el-table>
     <span slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">Hủy bỏ</el-button>
-      <el-button type="primary" @click="dialogFormVisible = false">Xác nhận</el-button>
     </span>
   </el-dialog>
 </template>
@@ -31,31 +46,13 @@ export default {
     return {
       dialogFormVisible: false,
       class_survey: {},
-      ruleForm: {
-        subject_name: '',
-        subject_code: '',
-        teacher: ''
-      },
-      rules: {
-        subject_name: [
-          { required: true, message: 'Tên môn học không được để trống', trigger: 'blur' }
-        ],
-        teacher: [
-          { required: true, message: 'Tên giảng viên không được để  trống' }
-        ],
-        subject_code: [
-          { required: true, message: 'Mã lớp môn học không được để trống', trigger: ['change', 'blur'] }
-        ]
-      }
+      tableData: []
     }
   },
   methods: {
     open (class_survey) {
-      this.ruleForm.subject_name = class_survey.subject_name
-      this.ruleForm.subject_code = class_survey.subject_code
-      this.ruleForm.fullname = class_survey.fullname
-      this.ruleForm.teacher = class_survey.teacher
       this.class_survey = class_survey
+      this.tableData = class_survey.studentClassSubjects
       this.dialogFormVisible = true
     }
   }

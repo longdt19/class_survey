@@ -51,7 +51,7 @@ class Services {
         console.log('process.env.BACKEND_URL', process.env.BACKEND_URL);
         // TODO: handle authorization issue
         // this.context.$store.commit('User/signed_out')
-        // window.location.href = process.env.FRONTEND_URL + '/login'
+        window.location.href = process.env.FRONTEND_URL + '/dang-nhap'
       }
     }
     return response

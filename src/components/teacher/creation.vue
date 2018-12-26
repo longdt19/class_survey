@@ -143,10 +143,10 @@ export default {
       formData.append('file', this.file_upload)
       const response = await this.$services.do_request('post', TEACHER_UPLOAD, formData)
       this.loading = false
-      console.log('response', response)
 
       if (response.data.message === 'Success') {
         this.$message.success('Thêm mới giảng viên thành công')
+        this.file_uplaod = ''
       } else if (response.status === 400) {
         this.$message.error(STATUS[response.data.code])
       }

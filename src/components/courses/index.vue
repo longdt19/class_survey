@@ -15,7 +15,7 @@
                 </div>
                 <div class="" style="display: flex">
                   <div class="top_bar_lang" style="align-items: center; display: flex">
-                    <span class="top_bar_title">14020259@vnu.edu.vn</span>
+                    <span class="top_bar_title">{{common_data.username}}@vnu.edu.vn</span>
                   </div>
                   <div class="header_content_right ml-auto text-right" >
 
@@ -25,12 +25,9 @@
                         <i class="fa fa-user" aria-hidden="true"></i>
                       </el-button>
                       <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>
-                          <el-button type="text">Đổi mật khẩu</el-button>
 
-                        </el-dropdown-item>
                         <el-dropdown-item>
-                          <el-button type="text">Đăng xuất</el-button>
+                          <el-button type="text" @click.native="logout">Đăng xuất</el-button>
                         </el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
@@ -67,7 +64,14 @@
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    logout () {
+      this.$store.commit('Common/restore')
+      this.$router.push('/dang-nhap')
+    }
+  }
+}
 </script>
 
 <style scoped>
