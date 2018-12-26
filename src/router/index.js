@@ -15,9 +15,12 @@ import Login from '@/components/login'
 
 import CourseLayout from '@/components/courses'
 import Course from '@/components/courses/course'
-import AllCourses from '@/components/courses/all'
+import AllCoursesLayout from '@/components/courses/all'
 
 import ManageSurvey from '@/components/surveys/manage'
+
+import Setting from '@/components/courses/all/setting'
+import MyCourses from '@/components/courses/all/mycourses'
 
 Vue.use(Router)
 
@@ -74,9 +77,22 @@ export default new Router({
       redirect: '/danh-sach-lop-mon-hoc',
       children: [
         {
-          path: 'danh-sach-lop-mon-hoc',
+          path: '',
           name: 'all-courses',
-          component: AllCourses
+          component: AllCoursesLayout,
+          redirect: '/cac-mon-hoc-cua-toi',
+          children: [
+            {
+              path: '/thong-tin-tai-khoan',
+              name: 'info-user',
+              component: Setting
+            },
+            {
+              path: '/cac-mon-hoc-cua-toi',
+              name: 'my-courses',
+              component: MyCourses
+            }
+          ]
         },
         {
           path: 'mon-hoc',

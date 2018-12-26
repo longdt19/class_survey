@@ -3,26 +3,33 @@
     <el-card class="box-card" style="margin-top: 50px">
       <div slot="header" class="clearfix">
         <span>Tạo mới phiếu khảo sát</span>
-        <!-- <el-button style="float: right" type="button">Chọn tệp tải lên   <i class="el-icon-upload el-icon-right"></i></el-button> -->
-      </div>
-      <div class="">
-        <el-button size="mini" @click="new_item_line()">+</el-button>
       </div>
 
-      <div class="" style="margin-top: 10px; margin-left: 50px"
-        v-for="(item_line, index) in item_lines" v-bind:key="index"
+      <el-button @click="new_item_line()">+</el-button>
+      <div style="margin-top: 10px; margin-left: 50px;"
+        v-for="(item_line, index_item) in item_lines" v-bind:key="index_item"
       >
-        <el-input style="width: 500px"/>
+        <span>{{index_item + 1}}. </span>
+
+        <el-input v-model="item_line.name" style="width: 500px; margin-top:30px"/>
+
+        <el-button style="margin-left: 130px" @click="remove_item_line(index_item)">-</el-button>
+
+        <el-button style="margin-left: 130px" @click="new_line_usage(index_item)">+</el-button>
+
         <div class="" style="margin-left: 50px; margin-top: 20px"
-          v-for="(line, index) in item_line.lines" v-bind:key="index"
+          v-for="(line, index_line) in item_line.lines"
+          v-bind:key="index_line"
         >
-          <el-input style="width: 500px"/>
-          <el-button @click="new_line_usages()">+</el-button>
+          <span>{{index_line + 1}}. </span>
+          <el-input v-model="line.name" style="width: 500px"/>
+
+          <el-button size="mini" @click="remove_line_usage(index_item, index_line)">-</el-button>
         </div>
       </div>
-      <!-- <el-table :data="tableStudentData" border highlight-current-row style="width: 100%;margin-top:20px;">
-        <el-table-column v-for="item of tableHeader" :prop="item" :label="item" :key="item"/>
-      </el-table> -->
+      <div class="" style="margin-top: 50px; text-align: right">
+        <el-button @click="create_survey()">Thêm mới </el-button>
+      </div>
     </el-card>
   </section>
 </template>
@@ -34,18 +41,30 @@ export default {
       item_lines: [
         {
           name: '',
-          lines: []
+          lines: [{ name: '' }]
         }
-      ],
-      line_usages: []
+      ]
     }
   },
+  watch: {},
   methods: {
-    new_item_line () {
-
+    create_survey () {
+      console.log('data', this.item_lines)
     },
-    new_line_usages () {
-      this.line_usages += 1
+    new_item_line () {
+      this.item_lines.push({
+        name: '',
+        lines: [{ name: '' }]
+      })
+    },
+    new_line_usage (index_item) {
+      this.item_lines[index_item].lines.push({ name: '' })
+    },
+    remove_line_usage (index_item, index_line) {
+      this.item_lines[index_item].lines.splice(index_line, 1)
+    },
+    remove_item_line (index_item) {
+      this.item_lines.splice(index_item, 1)
     }
   }
 }

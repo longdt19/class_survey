@@ -12,102 +12,56 @@
       </div>
     </div>
   </div>
-  <div class="courses">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <h2 class="section_title text-center">Danh sách môn học</h2>
-        </div>
-      </div>
-      <div class="row courses_row">
 
-        <!-- Course -->
-        <div class="col-lg-4 course_col">
-          <div class="course">
-            <!-- <div class="course_image"><img src="images/course_12.jpg" alt=""></div> -->
-            <div class="course_body">
-              <div class="course_title"><a href="course.html">Phát triển ứng dụng web</a></div>
-              <div class="course_info">
-                <ul>
-                  <li>INT4444 1</li>
-                  <li><a href="#">Lê Đình Thanh</a></li>
-                </ul>
-              </div>
-              <div class="course_text">
-                <p>Thứ 2, tiết 3-5</p>
-                <p>Địa điểm: 201-G2</p>
-              </div>
-            </div>
-            <div class="course_footer d-flex flex-row align-items-center justify-content-start">
-              <div class="course_students"><i class="fa fa-user" aria-hidden="true"></i><span>40</span></div>
-              <div class="course_rating ml-auto"><i class="fa fa-star" aria-hidden="true"></i><span>35</span></div>
-              <div class="course_mark trans_200"><a href="/mon-hoc">Đánh giá</a></div>
-            </div>
-          </div>
-        </div>
+  <el-row :gutter="20">
+    <el-col :span="5">
+      <el-menu
+        :default-active="defaultActive"
+        class="el-menu-vertical-demo"
+        :style="`height: ` + common_data.slide_bar_height"
+        id="myMenu"
+      >
+        <el-menu-item index="my-courses" @click="go_to('cac-mon-hoc-cua-toi')">
+          <i class="el-icon-menu"></i>
+          <span>Danh sách lớp học của tôi</span>
+        </el-menu-item>
 
-        <div class="col-lg-4 course_col">
-          <div class="course">
-            <!-- <div class="course_image"><img src="images/course_12.jpg" alt=""></div> -->
-            <div class="course_body">
-              <div class="course_title"><a href="course.html">Phát triển ứng dụng web</a></div>
-              <div class="course_info">
-                <ul>
-                  <li>INT4444 1</li>
-                  <li><a href="#">Lê Đình Thanh</a></li>
-                </ul>
-              </div>
-              <div class="course_text">
-                <p>Thứ 2, tiết 3-5</p>
-                <p>Địa điểm: 201-G2</p>
-              </div>
-            </div>
-            <div class="course_footer d-flex flex-row align-items-center justify-content-start">
-              <div class="course_students"><i class="fa fa-user" aria-hidden="true"></i><span>40</span></div>
-              <div class="course_rating ml-auto"><i class="fa fa-star" aria-hidden="true"></i><span>35</span></div>
-              <div class="course_mark trans_200"><a href="/mon-hoc">Đánh giá</a></div>
-            </div>
-          </div>
-        </div>
+        <el-menu-item index="info-user" @click="go_to('thong-tin-tai-khoan')">
+          <i class="el-icon-setting"></i>
+          <span>Thông tin tài khoản</span>
+        </el-menu-item>
+      </el-menu>
 
-        <div class="col-lg-4 course_col">
-          <div class="course">
-            <!-- <div class="course_image"><img src="images/course_12.jpg" alt=""></div> -->
-            <div class="course_body">
-              <div class="course_title"><a href="course.html">Phát triển ứng dụng web</a></div>
-              <div class="course_info">
-                <ul>
-                  <li>INT4444 1</li>
-                  <li><a href="#">Lê Đình Thanh</a></li>
-                </ul>
-              </div>
-              <div class="course_text">
-                <p>Thứ 2, tiết 3-5</p>
-                <p>Địa điểm: 201-G2</p>
-              </div>
-            </div>
-            <div class="course_footer d-flex flex-row align-items-center justify-content-start">
-              <div class="course_students"><i class="fa fa-user" aria-hidden="true"></i><span>40</span></div>
-              <div class="course_rating ml-auto"><i class="fa fa-star" aria-hidden="true"></i><span>35</span></div>
-              <div class="course_mark trans_200"><a href="/mon-hoc">Đánh giá</a></div>
-            </div>
-          </div>
-        </div>
+    </el-col>
 
-      </div>
+    <el-col :span="19" id="courses_row">
+      <router-view />
+    </el-col>
+  </el-row>
 
-      <!-- <div class="row">
-        <div class="col">
-          <div class="load_more_button"><a href="#">load more</a></div>
-        </div>
-      </div> -->
-    </div>
-  </div>
 </section>
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      defaultActive: ''
+    }
+  },
+  methods: {
+    go_to (path) {
+      this.$router.push('/' + path)
+    }
+  },
+  mounted () {
+    let elm = document.getElementById('courses_row').offsetHeight
+    document.getElementById('myMenu').style.height = elm + 'px'
+  },
+  created () {
+    this.defaultActive = this.$route.name
+  }
+}
 </script>
 
 <style scoped>

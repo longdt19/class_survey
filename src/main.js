@@ -32,15 +32,15 @@ Vue.mixin({
   }
 })
 
-router.beforeEach((to, _from, next) => {
-  let username = store.state.Common.username
-  let admin_site = to.path
-
-  if (username !== 'admin' && admin_site.includes('/quan-tri/')) {
-    next('/')
-  }
-  next()
-})
+// router.beforeEach((to, _from, next) => {
+//   let username = store.state.Common.username
+//   let admin_site = to.path
+//
+//   if (username !== 'admin' && admin_site.includes('/quan-tri/')) {
+//     next('/')
+//   }
+//   next()
+// })
 
 const createApp = () => {
   /* eslint-disable no-new */

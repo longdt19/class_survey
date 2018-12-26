@@ -81,7 +81,6 @@ export default {
     }
   },
   created () {
-    console.log('this.$route.name', this.$route.name)
     this.defaultActive = this.$route.name
   }
 }
