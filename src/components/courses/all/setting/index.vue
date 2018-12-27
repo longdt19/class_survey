@@ -4,7 +4,7 @@
 
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="Họ và tên">
+          <!-- <el-form-item label="Họ và tên">
             <el-input style="width: 300px"></el-input>
           </el-form-item>
 
@@ -18,7 +18,7 @@
 
           <el-form-item label="Khóa học">
             <el-input style="width: 300px"></el-input>
-          </el-form-item>
+          </el-form-item> -->
 
           <!-- <el-form-item>
             <el-button>Cập nhật thông tin</el-button>

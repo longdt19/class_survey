@@ -61,8 +61,29 @@ export default {
     }
   },
   methods: {
+    check_befor_create () {
+      if (this.ruleForm.username === '') {
+        this.$message.error('Tên đăng nhập không được để trống')
+        return false
+      }
+      if (this.ruleForm.fullname === '') {
+        this.$message.error('Họ tên không được để trống')
+        return false
+      }
+      if (this.ruleForm.teacher_code === '') {
+        this.$message.error('Mã giảng viên không được để trống')
+        return false
+      } if (this.ruleForm.email === '') {
+        this.$message.error('Email giảng viên không được để trống')
+        return false
+      }
+      return true
+    },
     async edit () {
       if (this.loading) return
+      if (this.check_befor_create() === false) {
+        return
+      }
       this.loading = true
 
       const data = {

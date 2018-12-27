@@ -70,6 +70,7 @@
         <el-button circle icon="el-icon-search" @click="edit_class(scope.row)"></el-button>
         <el-button circle icon="el-icon-view" @click="open_generate_survey(scope.row)"></el-button>
         <el-button circle icon="el-icon-delete" type="danger" @click="delete_class(scope.row)"></el-button>
+        <el-button circle icon="el-icon-more" @click="show_report_detail(scope.row)"></el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -78,6 +79,7 @@
   <delete-component ref='delete_class' @deleted_class="deleted_class"/>
   <gen-survey ref='generate_survey' @generated_survey='generated_survey' />
   <gen-all-survey ref='generate_all' @generated_survey='generated_survey' />
+  <report-detail ref='show_report' />
 </section>
 </template>
 
@@ -91,9 +93,10 @@ import EditComponent from './edition'
 import DeleteComponent from './deletion'
 import GenSurvey from './generate_survey'
 import GenAllSurvey from './generate_all'
+import ReportDetail from './report_detail'
 
 export default {
-  components: { UploadExcelComponent, EditComponent, DeleteComponent, GenSurvey, GenAllSurvey },
+  components: { UploadExcelComponent, EditComponent, DeleteComponent, GenSurvey, GenAllSurvey, ReportDetail },
   data () {
     return {
       tableStudentData: [],
@@ -177,6 +180,9 @@ export default {
     handleSuccess ({ results, header }) {
       // this.tableStudentData = results
       // this.tableHeader = header
+    },
+    show_report_detail (class_subject) {
+      this.$refs.show_report.open(class_subject)
     }
   },
   created () {

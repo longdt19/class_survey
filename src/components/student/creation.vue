@@ -103,8 +103,34 @@ export default {
     }
   },
   methods: {
+    check_befor_create () {
+      if (this.ruleForm.username === '') {
+        this.$message.error('Mã sinh viên không được để trống')
+        return false
+      }
+      if (this.ruleForm.password === '') {
+        this.$message.error('Mật khẩu không được để trống')
+        return false
+      }
+      if (this.ruleForm.fullname === '') {
+        this.$message.error('Họ tên không được để trống')
+        return false
+      }
+      if (this.ruleForm.course === '') {
+        this.$message.error('Khóa học không được để trống')
+        return false
+      }
+      if (this.ruleForm.email === '') {
+        this.$message.error('Email không được để trống')
+        return false
+      }
+      return true
+    },
     async create_student () {
       if (this.loading) return
+      if (this.check_befor_create() === false) {
+        return
+      }
       this.loading = true
 
       const data = {
