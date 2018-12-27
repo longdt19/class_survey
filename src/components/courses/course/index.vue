@@ -320,9 +320,26 @@ export default {
         console.log('error')
       }
     },
+    check_befor_update () {
+      let check = true
+      this.item_lines.forEach(item_line => {
+        item_line.lines.forEach(line => {
+          console.log('ine.value', line.value === '')
+          if (line.value === '') {
+            this.$message.error('Các trường đánh giá không được để trống')
+            check = false
+          }
+        })
+      })
+      return check
+    },
     async update_survey () {
       if (this.loading_update) return
+      if (this.check_befor_update() === false) {
+        return
+      }
       this.loading_update = true
+
       const data = {
         'id': this.survey_id,
         'comment': this.comment,
