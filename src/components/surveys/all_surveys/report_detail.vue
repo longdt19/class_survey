@@ -53,7 +53,7 @@
 
     </el-table>
 
-    <div v-if="comments.length !== 0" class="faqs" style="margin-top: 50px">
+    <div class="faqs" style="margin-top: 50px">
       <div class="panel_title">Ý kiến phản hồi</div>
       <div class="accordions"  style="margin-left: 50px">
 
