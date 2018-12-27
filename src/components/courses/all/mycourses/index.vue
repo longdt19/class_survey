@@ -26,8 +26,8 @@
               </div>
             </div>
             <div class="course_footer d-flex flex-row align-items-center justify-content-start">
-              <div class="course_students"><i class="fa fa-user" aria-hidden="true"></i><span>40</span></div>
-              <div class="course_rating ml-auto"><i class="fa fa-star" aria-hidden="true"></i><span>35</span></div>
+              <div class="course_students"><i class="fa fa-user" aria-hidden="true"></i><span></span></div>
+              <div class="course_rating ml-auto"><i class="fa fa-star" aria-hidden="true"></i><span></span></div>
               <div v-if="cls.isStartSurvey === 1" class="course_mark trans_200"><a :href=" '/mon-hoc/' + cls.id ">Xem</a></div>
             </div>
           </div>
@@ -45,7 +45,7 @@
               <div class="course_info">
                 <ul>
                   <li>{{ cls.classSubject.name }}</li>
-                  <li><a href="#">Lê Đình Thanh</a></li>
+                  <li><a href="#">{{ cls.classSubject.lecturer.fullname }}</a></li>
                 </ul>
               </div>
               <div class="course_text">
@@ -54,8 +54,8 @@
               </div>
             </div>
             <div class="course_footer d-flex flex-row align-items-center justify-content-start">
-              <div class="course_students"><i class="fa fa-user" aria-hidden="true"></i><span>40</span></div>
-              <div class="course_rating ml-auto"><i class="fa fa-star" aria-hidden="true"></i><span>35</span></div>
+              <div class="course_students"><i class="fa fa-user" aria-hidden="true"></i><span></span></div>
+              <div class="course_rating ml-auto"><i class="fa fa-star" aria-hidden="true"></i><span></span></div>
               <div v-if="cls.survey" class="course_mark trans_200"><a :href=" '/mon-hoc/' + cls.survey.id ">Đánh giá</a></div>
             </div>
           </div>
